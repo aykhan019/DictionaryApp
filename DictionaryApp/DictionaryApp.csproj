@@ -67,8 +67,12 @@
     <Compile Include="Helpers\ImageHelpers.cs" />
     <Compile Include="Helpers\WordDetailHelpers.cs" />
     <Compile Include="Models\WordModels\WordDetailModel.cs" />
+    <Compile Include="ViewModels\DefinitionSentenceUCViewModel.cs" />
     <Compile Include="ViewModels\WordInSpeechUCViewModel.cs" />
     <Compile Include="ViewModels\WordUCViewModel.cs" />
+    <Compile Include="Views\DefinitionSentenceUC.xaml.cs">
+      <DependentUpon>DefinitionSentenceUC.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\WordInSpeechUC.xaml.cs">
       <DependentUpon>WordInSpeechUC.xaml</DependentUpon>
     </Compile>
@@ -76,6 +80,10 @@
       <DependentUpon>WordUC.xaml</DependentUpon>
     </Compile>
     <Page Include="Dictionaries\MyDictionary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DefinitionSentenceUC.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -162,6 +170,18 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\noun.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\adjective.png" />
+    <Resource Include="Assets\adverb.png" />
+    <Resource Include="Assets\conjunction.png" />
+    <Resource Include="Assets\interjection.png" />
+    <Resource Include="Assets\preposition.png" />
+    <Resource Include="Assets\pronoun.png" />
+    <Resource Include="Assets\verb.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\dot.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

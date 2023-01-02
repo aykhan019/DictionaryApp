@@ -52,17 +52,42 @@ namespace DictionaryApp.ViewModels
                         wordUC.DataContext = wordUCVM;
                         Items.Add(wordUC);
 
+                        var partOfSpeeches = result.Meanings.Select(x => x.PartOfSpeech).ToList();
+                        var hasDone = new List<string>();
                         foreach (var meaning in result.Meanings)
                         {
-                            var partOfSpeechUC = new WordInSpeechUC();
-                            var partOfSpeechUCVM = new WordInSpeechUCViewModel()
+                            var currentPartOfSpeech = meaning.PartOfSpeech;
+                            if (!hasDone.Contains(currentPartOfSpeech))
                             {
-                                 PartOfSpeechImageSource = ImageHelpers.GetPartOfSpeechImageSource(meaning.PartOfSpeech.ToPartOfSpeechEnum())
-                            };
-                            partOfSpeechUC.DataContext= partOfSpeechUCVM;
-                            Items.Add(partOfSpeechUC);
-                        }
+                                var meaningsWithSamePartOfSpeech = result.Meanings.Where(x => x.PartOfSpeech == currentPartOfSpeech);
 
+                                var partOfSpeechUC = new WordInSpeechUC();
+                                var partOfSpeechUCVM = new WordInSpeechUCViewModel(result, meaning);
+                                partOfSpeechUC.DataContext = partOfSpeechUCVM;
+
+                                foreach (var mw in meaningsWithSamePartOfSpeech)
+                                {
+                                    foreach (var d in mw.Definitions)
+                                    {
+                                        var definitionSentenceUC = new DefinitionSentenceUC();
+                                        var definitionSentenceUCVM = new DefinitionSentenceUCViewModel()
+                                        {
+                                            Definition = d.Definition,
+                                            SentenceExample = d.Example
+                                        };
+                                        if (definitionSentenceUCVM.SentenceExample == null || definitionSentenceUCVM.SentenceExample.Trim().Length == 0)
+                                        {
+                                            definitionSentenceUCVM.SentenceExample = Constants.NoSentenceExample;
+                                        }
+                                        definitionSentenceUC.DataContext = definitionSentenceUCVM;
+                                        partOfSpeechUCVM.Items.Add(definitionSentenceUC);
+                                    }
+                                }
+                                partOfSpeechUC.Width = App.MainColumn.ActualWidth - 40;
+                                Items.Add(partOfSpeechUC);
+                                hasDone.Add(currentPartOfSpeech);
+                            }
+                        }
                     }
                     else
                     {

@@ -2,6 +2,7 @@
 using DictionaryApp.ViewModels;
 using DictionaryApp.Views;
 using System.Speech.Synthesis;
+using System.Threading;
 using System.Windows;
 
 namespace DictionaryApp
@@ -17,10 +18,17 @@ namespace DictionaryApp
             App.PageGrid = MyGrid;
             var homePageView = new HomePageUC();
             App.MainColumn = homePageView.MainColumn;
+            App.SecondColumn = homePageView.SecondColumn;
             var homePageViewModel = new HomePageViewModel();
             homePageView.DataContext = homePageViewModel;
             App.PageGrid.Children.Add(homePageView);
-            //homePageViewModel.SearchCommand.Execute(null);  
+        }
+
+        private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            var view = (App.PageGrid.Children[0] as HomePageUC);
+            var width = App.MainColumn.ActualWidth - 40;
+            view.SearchTB.Width = width - 60;
         }
     }
 }

@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:DictionaryApp.Views"
              Margin="20"
-             Width="800"
+             d:DesignWidth="800"
              mc:Ignorable="d">
     <Border BorderBrush="Transparent"
             CornerRadius="33"
@@ -86,7 +86,6 @@
                     </TextBlock>
                 </Grid>
 
-
                 <Grid Grid.Row="1">
                     <StackPanel>
                         <TextBlock 
@@ -103,6 +102,7 @@
                                FontFamily="Lucida Fax"
                                FontWeight="Normal"
                                Height="Auto"
+                               Margin="0,0,20,0"
                                TextWrapping="Wrap"
                                Foreground="{StaticResource FifthColor}"
                                Padding="0,10,0,0"
@@ -125,7 +125,7 @@
                                Foreground="{StaticResource FifthColor}"
                                TextWrapping="Wrap"
                                Height="Auto"
-                            Margin="0,0,0,20"
+                               Margin="0,0,20,20"
                                Padding="0,10,0,0"
                                FontSize="17">
                         </TextBlock>

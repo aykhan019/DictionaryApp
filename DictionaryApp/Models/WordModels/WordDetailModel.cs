@@ -48,13 +48,13 @@ namespace DictionaryApp.Models.WordModels
             WordDetail = _wordDetail;
             Phonetic = $"[  {WordDetail.Phonetic}  ]";
             var firstMeaning = WordDetail.Meanings[0];
-            PartOfSpeechAndDefinition = firstMeaning.PartOfSpeech + " ~ " + firstMeaning.Definitions[0].Definition;
-            PartOfSpeechAndDefinition = Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(PartOfSpeechAndDefinition);
+            var partOfSpeech = Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(firstMeaning.PartOfSpeech);
+            PartOfSpeechAndDefinition = $"{partOfSpeech} ~ \"{firstMeaning.Definitions[0].Definition}\"";
             SentenceExample = WordDetail.Meanings[0].Definitions[0].Example;
             if (SentenceExample == null || SentenceExample.Trim().Length == 0)
-            {
-                SentenceExample = Constants.NoDefinition;
-            }
+                SentenceExample = Constants.NoSentenceExample;
+            else
+                SentenceExample = $"\"{SentenceExample}\"";
         }
     }
 }

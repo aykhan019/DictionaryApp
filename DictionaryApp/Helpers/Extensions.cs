@@ -11,21 +11,21 @@ namespace DictionaryApp.Helpers
     {
         public static PartOfSpeech ToPartOfSpeechEnum(this string str)
         {
-            switch (str)
+            switch (str.ToLower())
             {
-                case "Noun":
+                case "noun":
                     return PartOfSpeech.Noun;
-                case "Adverb":
+                case "adverb":
                     return PartOfSpeech.Adverb;
-                case "Verb":
+                case "verb":
                     return PartOfSpeech.Verb;
-                case "Adjective":
+                case "adjective":
                     return PartOfSpeech.Adjective;
-                case "Preposition":
+                case "preposition":
                     return PartOfSpeech.Preposition;
-                case "Conjunction":
+                case "conjunction":
                     return PartOfSpeech.Conjunction;
-                case "Interjection":
+                case "interjection":
                     return PartOfSpeech.Interjection;
                 default:
                     break;

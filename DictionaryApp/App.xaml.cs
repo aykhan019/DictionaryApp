@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DictionaryApp.Views;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -16,5 +17,6 @@ namespace DictionaryApp
     {
         public static Grid PageGrid { get; internal set; }
         public static Grid MainColumn { get; internal set; }
+        public static Grid SecondColumn { get; internal set; }
     }
 }

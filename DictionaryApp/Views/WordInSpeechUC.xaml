@@ -5,18 +5,58 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:DictionaryApp.Views"
              Margin="20"
-             Width="800"
+             Height="Auto"
+             d:DesignWidth="900"
              mc:Ignorable="d">
     <Border BorderBrush="Transparent"
             CornerRadius="33"
             Background="White">
         <Grid Background="Transparent">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="3*"></RowDefinition>
+            </Grid.RowDefinitions>
 
-            <Image Height="30"
-                   Width="30"
-                   Source="{Binding PartOfSpeechImageSource}">
-            </Image>
             
+            <Grid Grid.Row="0">
+                <StackPanel Orientation="Horizontal"
+                            Margin="30,20,30,0">
+                    <Image Height="70"
+                           Width="70"
+                           Source="{Binding PartOfSpeechImageSource}">
+                    </Image>
+
+                    <TextBlock Style="{StaticResource MainWordTBlockStyle}"
+                               Text="{Binding Headline,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                               FontFamily="Fixedys"
+                               FontWeight="Bold"
+                               Margin="20,0,0,0"
+                               Padding="0,12,0,0"
+                               FontSize="27"
+                               Foreground="{StaticResource EighthColor}">
+                    </TextBlock>
+                </StackPanel>
+            </Grid>
+
+            <Grid Grid.Row="1">
+                <ListView Margin="0,20,0,20"
+                          ItemsSource="{Binding Items}"
+                          ItemContainerStyle="{StaticResource LvItemStyle}">
+                    <ListBox.Template>
+                        <ControlTemplate TargetType="ListBox">
+                            <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderBrush}">
+                                <ItemsPresenter/>
+                            </Border>
+                        </ControlTemplate>
+                    </ListBox.Template>
+
+                    <!--<ListView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel Height="Auto" Width="1100" Margin="0,20,0,0"></WrapPanel>
+                        </ItemsPanelTemplate>
+                    </ListView.ItemsPanel>-->
+                </ListView>
+            </Grid>
         </Grid>
     </Border>
 </UserControl>
