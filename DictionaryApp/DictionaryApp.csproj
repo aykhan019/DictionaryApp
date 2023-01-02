@@ -63,6 +63,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Helpers\Extensions.cs" />
+    <Compile Include="Helpers\ImageHelpers.cs" />
+    <Compile Include="Helpers\WordDetailHelpers.cs" />
+    <Compile Include="Models\WordModels\WordDetailModel.cs" />
     <Compile Include="ViewModels\WordInSpeechUCViewModel.cs" />
     <Compile Include="ViewModels\WordUCViewModel.cs" />
     <Compile Include="Views\WordInSpeechUC.xaml.cs">
@@ -155,6 +159,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\loadingGif.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\noun.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

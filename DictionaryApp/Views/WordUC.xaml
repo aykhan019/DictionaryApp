@@ -25,13 +25,13 @@
 
                 <Grid Grid.Row="0">
                     <TextBlock Style="{StaticResource MainWordTBlockStyle}"
-                               Text="{Binding WordDetail.Word}">
+                               Text="{Binding WordDetailModel.WordDetail.Word}">
                     </TextBlock>
                 </Grid>
 
                 <Grid Grid.Row="1">
                     <TextBlock Style="{StaticResource PronunciationTBlockStyle}"
-                               Text="{Binding Phonetic}">
+                               Text="{Binding WordDetailModel.Phonetic}">
                     </TextBlock>
                 </Grid>
 
@@ -99,7 +99,7 @@
                                FontSize="17">
                         </TextBlock>
                         <TextBlock 
-                               Text="{Binding PartOfSpeechAndDefinition,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                               Text="{Binding WordDetailModel.PartOfSpeechAndDefinition,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                                FontFamily="Lucida Fax"
                                FontWeight="Normal"
                                Height="Auto"
@@ -119,7 +119,7 @@
                                FontSize="17">
                         </TextBlock>
                         <TextBlock 
-                               Text="{Binding SentenceExample,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                               Text="{Binding WordDetailModel.SentenceExample,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                                FontFamily="Lucida Fax"
                                FontWeight="Normal"
                                Foreground="{StaticResource FifthColor}"

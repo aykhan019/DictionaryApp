@@ -33,7 +33,6 @@ namespace DictionaryApp.ViewModels
             set { items = value; OnPropertyChanged(); }
         }
 
-
         public HomePageViewModel()
         {
             SearchText = Constants.SearchDefaultText;
@@ -41,28 +40,39 @@ namespace DictionaryApp.ViewModels
             SearchCommand = new RelayCommand((s) =>
             {
                 Items.Clear();
-                dynamic result;
                 try
                 {
-                    result = DictionaryService.GetWordDetail(SearchText.Trim()).Result;
+                    var result = DictionaryService.GetWordDetail(SearchText.Trim()).Result;
+
+                    if (result != null)
+                    {
+                        var wordUC = new WordUC();
+                        wordUC.Width = App.MainColumn.ActualWidth - 40;
+                        var wordUCVM = new WordUCViewModel(result);
+                        wordUC.DataContext = wordUCVM;
+                        Items.Add(wordUC);
+
+                        foreach (var meaning in result.Meanings)
+                        {
+                            var partOfSpeechUC = new WordInSpeechUC();
+                            var partOfSpeechUCVM = new WordInSpeechUCViewModel()
+                            {
+                                 PartOfSpeechImageSource = ImageHelpers.GetPartOfSpeechImageSource(meaning.PartOfSpeech.ToPartOfSpeechEnum())
+                            };
+                            partOfSpeechUC.DataContext= partOfSpeechUCVM;
+                            Items.Add(partOfSpeechUC);
+                        }
+
+                    }
+                    else
+                    {
+                        // show that no result was found
+                    }
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message);
                     return;
-                }
-                if (result != null)
-                {
-                    var wordUC = new WordUC();
-                    wordUC.Width = App.MainColumn.ActualWidth - 40;
-                    var wordUCVM = new WordUCViewModel(result);
-                    wordUC.DataContext = wordUCVM;
-                    Items.Add(wordUC);
-                    wordUC.Height += 1000;
-                }
-                else
-                {
-
                 }
             });
 
