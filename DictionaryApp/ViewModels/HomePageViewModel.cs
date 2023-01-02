@@ -41,7 +41,16 @@ namespace DictionaryApp.ViewModels
             SearchCommand = new RelayCommand((s) =>
             {
                 Items.Clear();
-                var result = DictionaryService.GetWordDetail(SearchText.Trim()).Result;
+                dynamic result;
+                try
+                {
+                    result = DictionaryService.GetWordDetail(SearchText.Trim()).Result;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                    return;
+                }
                 if (result != null)
                 {
                     var wordUC = new WordUC();
@@ -49,6 +58,7 @@ namespace DictionaryApp.ViewModels
                     var wordUCVM = new WordUCViewModel(result);
                     wordUC.DataContext = wordUCVM;
                     Items.Add(wordUC);
+                    wordUC.Height += 1000;
                 }
                 else
                 {

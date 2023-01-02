@@ -61,19 +61,18 @@
                     </Grid>
 
                     <Grid Grid.Column="1">
-                        <ComboBox ItemsSource="{Binding PronunciationTypes}"
+                        <!--<ComboBox ItemsSource="{Binding PronunciationTypes}"
                                   SelectedIndex="{Binding SelectedIndex,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
 
-                        </ComboBox>
+                        </ComboBox>-->
                     </Grid>
                 </Grid>
             </Grid>
 
             <Grid Grid.Column="1">
                 <Grid.RowDefinitions>
-                    <RowDefinition></RowDefinition>
-                    <RowDefinition></RowDefinition>
-                    <RowDefinition></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="2*"></RowDefinition>
                 </Grid.RowDefinitions>
 
                 <Grid Grid.Row="0">
@@ -94,36 +93,39 @@
                                Text="Definition"
                                FontFamily="Lucida Fax"
                                FontWeight="Normal"
+                               TextWrapping="Wrap"
                                Foreground="{StaticResource ThirdColor}"
                                Padding="0,10,0,0"
                                FontSize="17">
                         </TextBlock>
                         <TextBlock 
-                               Text="{Binding WordDetail.Meanings[0].Definitions[0].Definition}"
+                               Text="{Binding PartOfSpeechAndDefinition,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                                FontFamily="Lucida Fax"
                                FontWeight="Normal"
+                               Height="Auto"
+                               TextWrapping="Wrap"
                                Foreground="{StaticResource FifthColor}"
                                Padding="0,10,0,0"
                                FontSize="17">
                         </TextBlock>
-                    </StackPanel>
-                </Grid>
-
-                <Grid Grid.Row="2">
-                    <StackPanel>
+                        
                         <TextBlock 
                                Text="Usage"
                                FontFamily="Lucida Fax"
                                FontWeight="Normal"
+                               TextWrapping="Wrap"
                                Foreground="{StaticResource ThirdColor}"
                                Padding="0,10,0,0"
                                FontSize="17">
                         </TextBlock>
                         <TextBlock 
-                               Text="{Binding WordDetail.Meanings[0].Definitions[0].Example}"
+                               Text="{Binding SentenceExample,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                                FontFamily="Lucida Fax"
                                FontWeight="Normal"
                                Foreground="{StaticResource FifthColor}"
+                               TextWrapping="Wrap"
+                               Height="Auto"
+                            Margin="0,0,0,20"
                                Padding="0,10,0,0"
                                FontSize="17">
                         </TextBlock>

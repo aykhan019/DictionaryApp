@@ -9,6 +9,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Speech.Synthesis;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace DictionaryApp.ViewModels
@@ -33,49 +34,43 @@ namespace DictionaryApp.ViewModels
 			set { phonetic = value; OnPropertyChanged(); }
 		}
 
-		private ObservableCollection<string> pronunciationTypes = new ObservableCollection<string>();
+		private string partOfSpeechAndDefinition;
 
-		public ObservableCollection<string> PronunciationTypes
+		public string PartOfSpeechAndDefinition
         {
-			get { return pronunciationTypes; }
-			set { pronunciationTypes = value; OnPropertyChanged(); }
+			get { return partOfSpeechAndDefinition; }
+			set { partOfSpeechAndDefinition = value; OnPropertyChanged(); }
 		}
 
-        private ObservableCollection<string> pronunciationUrls = new ObservableCollection<string>();
+		private string sentenceExample;
 
-        public ObservableCollection<string> PronunciationUrls
-        {
-            get { return pronunciationUrls; }
-            set { pronunciationUrls = value; OnPropertyChanged(); }
-        }
-
-        private int selectedIndex;
-				
-		public int SelectedIndex
-        {
-			get { return selectedIndex; }
-			set { selectedIndex = value; OnPropertyChanged(); }
+		public string SentenceExample
+		{
+			get { return sentenceExample; }
+			set { sentenceExample = value; OnPropertyChanged(); }
 		}
+
+
 
 		public WordUCViewModel(WordDetail _wordDetail)
 		{
 			WordDetail= _wordDetail;
 			Phonetic = $"[  {WordDetail.Phonetic}  ]";
-
-			foreach (var pr in WordDetail.Phonetics)
-			{
-				var url = pr.SourceURL;
-                if (!string.IsNullOrEmpty(url))
-				{
-					PronunciationUrls.Add(url);
-					PronunciationTypes.Add(url.Substring(url.Length - 6, 2));
-                }
+			var firstMeaning = WordDetail.Meanings[0];
+            PartOfSpeechAndDefinition = firstMeaning.PartOfSpeech + " ~ " + firstMeaning.Definitions[0].Definition;
+            PartOfSpeechAndDefinition = Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(PartOfSpeechAndDefinition);
+            SentenceExample = WordDetail.Meanings[0].Definitions[0].Example;
+			if (SentenceExample == null || SentenceExample.Trim().Length == 0)
+            {
+				SentenceExample = Constants.NoDefinition;
 			}
+
 
             ListenPronunciationCommand = new RelayCommand((l) =>
 			{
                 using (SpeechSynthesizer synthesizer = new SpeechSynthesizer())
                 {
+                    synthesizer.SelectVoiceByHints(VoiceGender.Female);
                     synthesizer.SetOutputToDefaultAudioDevice();
                     // Speaks a string synchronously. 
                     synthesizer.Speak(WordDetail.Word);

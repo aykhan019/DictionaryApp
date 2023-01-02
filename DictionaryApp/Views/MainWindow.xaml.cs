@@ -20,6 +20,7 @@ namespace DictionaryApp
             var homePageViewModel = new HomePageViewModel();
             homePageView.DataContext = homePageViewModel;
             App.PageGrid.Children.Add(homePageView);
+            //homePageViewModel.SearchCommand.Execute(null);  
         }
     }
 }
