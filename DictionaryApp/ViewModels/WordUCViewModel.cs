@@ -27,9 +27,19 @@ namespace DictionaryApp.ViewModels
 			set { wordDetailModel = value; }
 		}
 
+		private string word;
+
+		public string Word
+		{
+			get { return word; }
+			set { word = value; OnPropertyChanged(); }
+		}
+
+
 		public WordUCViewModel(WordDetail _wordDetail)
 		{
             WordDetailModel = new WordDetailModel(_wordDetail);
+			Word = Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(WordDetailModel.WordDetail.Word);
 
             ListenPronunciationCommand = new RelayCommand((l) =>
 			{

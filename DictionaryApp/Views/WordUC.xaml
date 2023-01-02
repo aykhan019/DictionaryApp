@@ -25,7 +25,7 @@
 
                 <Grid Grid.Row="0">
                     <TextBlock Style="{StaticResource MainWordTBlockStyle}"
-                               Text="{Binding WordDetailModel.WordDetail.Word}">
+                               Text="{Binding Word}">
                     </TextBlock>
                 </Grid>
 

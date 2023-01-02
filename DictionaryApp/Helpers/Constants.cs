@@ -9,7 +9,7 @@ namespace DictionaryApp.Helpers
     public class Constants
     {
         //public const string SearchDefaultText = "Search Word";
-        public const string SearchDefaultText = "Run";
+        public const string SearchDefaultText = "altitude";
 
         public static string NoSentenceExample = "Sorry pal, we couldn't find sentence example for the word you were looking for.";
 

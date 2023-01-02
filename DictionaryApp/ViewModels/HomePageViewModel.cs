@@ -84,7 +84,7 @@ namespace DictionaryApp.ViewModels
                                     }
                                 }
                                 partOfSpeechUC.Width = App.MainColumn.ActualWidth - 40;
-                                Items.Add(partOfSpeechUC);
+                                    Items.Add(partOfSpeechUC);
                                 hasDone.Add(currentPartOfSpeech);
                             }
                         }

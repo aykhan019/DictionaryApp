@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:DictionaryApp.Views"
              d:DesignWidth="800"
              d:DesignHeight="100"
+             Margin="0,0,0,10"
              mc:Ignorable="d">
     <Grid Background="White">
         <Grid.ColumnDefinitions>
@@ -55,7 +56,7 @@
                     FontFamily="Lucida Fax"
                     FontWeight="Light"
                     Height="Auto"
-                    Margin="0,0,20,0"
+                    Margin="0,-7,20,0"
                     TextWrapping="Wrap"
                     Foreground="{StaticResource FifthColor}"
                     Padding="0,10,0,0"
