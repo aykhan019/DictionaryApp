@@ -7,6 +7,7 @@
         mc:Ignorable="d"
         Title="My-Dictionary"
         WindowState="Maximized"
+        Icon="\Assets\dictionary.png"
         SizeChanged="Window_SizeChanged">
     <Grid x:Name="MyGrid">
    

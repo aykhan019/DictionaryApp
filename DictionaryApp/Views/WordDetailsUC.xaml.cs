@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace DictionaryApp.Views
 {
     /// <summary>
-    /// Interaction logic for WordInSpeechUC.xaml
+    /// Interaction logic for WordDetailsUC.xaml
     /// </summary>
-    public partial class WordInSpeechUC : UserControl
+    public partial class WordDetailsUC : UserControl
     {
-        public WordInSpeechUC()
+        public WordDetailsUC()
         {
             InitializeComponent();
         }

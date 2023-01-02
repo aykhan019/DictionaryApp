@@ -13,11 +13,11 @@ namespace DictionaryApp.Services
     {
         private static HttpClient _client = new HttpClient();
         private static readonly string URL = "https://api.dictionaryapi.dev/api/v2/entries/en/";
-        public static async Task<WordDetail> GetWordDetail(string word)
-        {
+        public static Task<WordDetail> GetWordDetail(string word)
+        {   
             var url = URL + word;
             var response = Task.Run(() => _client.GetAsync(url)).Result;
-            var str = await response.Content.ReadAsStringAsync();
+            var str = Task.Run(() => response.Content.ReadAsStringAsync()).Result;
             dynamic data;
             try
             {

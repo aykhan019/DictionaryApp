@@ -1,4 +1,5 @@
-﻿using DictionaryApp.Views;
+﻿using DictionaryApp.ViewModels;
+using DictionaryApp.Views;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -18,5 +19,9 @@ namespace DictionaryApp
         public static Grid PageGrid { get; internal set; }
         public static Grid MainColumn { get; internal set; }
         public static Grid SecondColumn { get; internal set; }
+        public static HomePageViewModel HomePageVM { get; internal set; }
+        public static List<string> SearchedWords { get; set; } = new List<string>();
+        public static int SearchedWordsIndex { get; set; } = -1;
+        public static ScrollViewer MainColumnScroll { get; internal set; }
     }
 }

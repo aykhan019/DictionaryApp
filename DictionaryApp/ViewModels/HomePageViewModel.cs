@@ -16,6 +16,8 @@ namespace DictionaryApp.ViewModels
     public class HomePageViewModel : BaseViewModel
     {
         public RelayCommand SearchCommand { get; set; }
+        public RelayCommand GoBackCommand { get; set; }
+        public RelayCommand GoForwardCommand { get; set; }
 
         private string searchText;
 
@@ -33,17 +35,56 @@ namespace DictionaryApp.ViewModels
             set { items = value; OnPropertyChanged(); }
         }
 
+        private readonly object syncObject = new object();
+
         public HomePageViewModel()
         {
             SearchText = Constants.SearchDefaultText;
 
+            GoBackCommand = new RelayCommand((g) =>
+            {
+                if (App.SearchedWordsIndex > 0)
+                {
+                    App.SearchedWordsIndex--;
+                    SearchText = App.SearchedWords[App.SearchedWordsIndex];
+                    SearchCommand.Execute(null);
+                }
+            });
+
+            GoForwardCommand = new RelayCommand((g) =>
+            {
+                if (App.SearchedWordsIndex < App.SearchedWords.Count - 1)
+                {
+                    App.SearchedWordsIndex++;
+                    SearchText = App.SearchedWords[App.SearchedWordsIndex];
+                    SearchCommand.Execute(null);
+                }
+            });
+
             SearchCommand = new RelayCommand((s) =>
             {
                 Items.Clear();
+                App.MainColumnScroll.ScrollToTop();
                 try
                 {
-                    var result = DictionaryService.GetWordDetail(SearchText.Trim()).Result;
+                    SearchText = SearchText.Trim();
+                    if (SearchText == string.Empty)
+                        return;
+                    string lastWord = String.Empty;
+                    if (App.SearchedWords.Count > 0)
+                    {
+                        lastWord = App.SearchedWords.Last();
+                    }
 
+                    if (lastWord != String.Empty)
+                    {
+                        if (lastWord != SearchText)
+                        {
+                            App.SearchedWords.Add(SearchText);
+                            App.SearchedWordsIndex++;
+                        }
+                    }
+                    var result = DictionaryService.GetWordDetail(SearchText).Result;
                     if (result != null)
                     {
                         var wordUC = new WordUC();
@@ -61,8 +102,8 @@ namespace DictionaryApp.ViewModels
                             {
                                 var meaningsWithSamePartOfSpeech = result.Meanings.Where(x => x.PartOfSpeech == currentPartOfSpeech);
 
-                                var partOfSpeechUC = new WordInSpeechUC();
-                                var partOfSpeechUCVM = new WordInSpeechUCViewModel(result, meaning);
+                                var partOfSpeechUC = new WordDetailsUC();
+                                var partOfSpeechUCVM = new WordDetailsUCViewModel(result, meaning);
                                 partOfSpeechUC.DataContext = partOfSpeechUCVM;
 
                                 foreach (var mw in meaningsWithSamePartOfSpeech)
@@ -84,7 +125,7 @@ namespace DictionaryApp.ViewModels
                                     }
                                 }
                                 partOfSpeechUC.Width = App.MainColumn.ActualWidth - 40;
-                                    Items.Add(partOfSpeechUC);
+                                Items.Add(partOfSpeechUC);
                                 hasDone.Add(currentPartOfSpeech);
                             }
                         }
@@ -92,6 +133,10 @@ namespace DictionaryApp.ViewModels
                     else
                     {
                         // show that no result was found
+                        var noResultUC = new NoResultUC();
+                        var fromLeft = (App.MainColumn.ActualWidth - 516) / 2;
+                        noResultUC.Margin = new Thickness(fromLeft, 100, 0, 0);
+                        Items.Add(noResultUC);
                     }
                 }
                 catch (Exception ex)

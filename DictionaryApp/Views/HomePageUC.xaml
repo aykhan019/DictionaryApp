@@ -5,6 +5,16 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:DictionaryApp.Views"
              mc:Ignorable="d">
+    <UserControl.InputBindings>
+        <KeyBinding Modifiers="Control"
+                    Key="Z"
+                    Command="{Binding GoBackCommand}">
+        </KeyBinding>
+        <KeyBinding Modifiers="Control"
+                    Key="Y"
+                    Command="{Binding GoForwardCommand}">
+        </KeyBinding>
+    </UserControl.InputBindings>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*"></ColumnDefinition>
@@ -45,7 +55,8 @@
 
             <Grid Grid.Row="1">
                 <ScrollViewer HorizontalScrollBarVisibility="Disabled"
-                              VerticalScrollBarVisibility="Auto">
+                              VerticalScrollBarVisibility="Auto"
+                              x:Name="MainColumnScroll">
                     <ListView ItemsSource="{Binding Items}"
                           ItemContainerStyle="{StaticResource LvItemStyle}">
                         <ListBox.Template>

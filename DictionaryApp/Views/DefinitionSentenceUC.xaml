@@ -38,7 +38,11 @@
             </Grid.RowDefinitions>
 
             <Grid Grid.Row='0'>
-                <TextBlock 
+                <TextBox Style="{StaticResource SelectableTextBlockStyle}"
+                         Text="{Binding Definition,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                         Margin="-3,0,20,0">
+                </TextBox>
+                <!--<TextBlock 
                     Text="{Binding Definition,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                     FontFamily="Lucida Fax"
                     FontWeight="ExtraBlack"
@@ -48,10 +52,15 @@
                     Foreground="{StaticResource FifthColor}"
                     Padding="0,10,0,0"
                     FontSize="17">
-                </TextBlock>
+                </TextBlock>-->
             </Grid>
             <Grid Grid.Row='1'>
-                <TextBlock 
+                <TextBox Style="{StaticResource SelectableTextBlockStyle}"
+                         Text="{Binding SentenceExample,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                         FontWeight="Light"
+                         Margin="-3,0,20,0">
+                </TextBox>
+                <!--<TextBlock 
                     Text="{Binding SentenceExample,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                     FontFamily="Lucida Fax"
                     FontWeight="Light"
@@ -61,7 +70,7 @@
                     Foreground="{StaticResource FifthColor}"
                     Padding="0,10,0,0"
                     FontSize="17">
-                </TextBlock>
+                </TextBlock>-->
             </Grid>
         </Grid> 
     </Grid>

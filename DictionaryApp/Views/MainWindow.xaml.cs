@@ -21,6 +21,8 @@ namespace DictionaryApp
             App.SecondColumn = homePageView.SecondColumn;
             var homePageViewModel = new HomePageViewModel();
             homePageView.DataContext = homePageViewModel;
+            App.MainColumnScroll = homePageView.MainColumnScroll;
+            App.HomePageVM = homePageViewModel;
             App.PageGrid.Children.Add(homePageView);
         }
 

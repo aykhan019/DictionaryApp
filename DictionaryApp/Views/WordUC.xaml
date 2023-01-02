@@ -19,23 +19,34 @@
             <Grid Grid.Column="0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="4*"></RowDefinition>
-                    <RowDefinition Height="2*"></RowDefinition>
                     <RowDefinition Height="6*"></RowDefinition>
                 </Grid.RowDefinitions>
 
                 <Grid Grid.Row="0">
-                    <TextBlock Style="{StaticResource MainWordTBlockStyle}"
+                    <StackPanel>
+                        <TextBox Style="{StaticResource SelectableTextBlockStyle}"
+                             Foreground="{StaticResource SecondColor}"
+                             Text="{Binding Word}"
+                             Padding="40,20,0,0"
+                             Width="Auto"
+                             FontSize="35"
+                             Background="Transparent"
+                             FontFamily="Javanese Text"
+                             Height="Auto">
+                        </TextBox>
+
+                        <TextBlock Style="{StaticResource PronunciationTBlockStyle}"
+                                   Text="{Binding WordDetailModel.Phonetic}"
+                                   Margin="0,-15,0,0">
+                        </TextBlock>
+                    </StackPanel>
+                    <!--<TextBlock Style="{StaticResource MainWordTBlockStyle}"
                                Text="{Binding Word}">
-                    </TextBlock>
+                    </TextBlock>-->
                 </Grid>
+
 
                 <Grid Grid.Row="1">
-                    <TextBlock Style="{StaticResource PronunciationTBlockStyle}"
-                               Text="{Binding WordDetailModel.Phonetic}">
-                    </TextBlock>
-                </Grid>
-
-                <Grid Grid.Row="2">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="2*"></ColumnDefinition>
                         <ColumnDefinition Width="3*"></ColumnDefinition>
@@ -92,7 +103,7 @@
                                Text="Definition"
                                FontFamily="Lucida Fax"
                                FontWeight="Normal"
-                               TextWrapping="Wrap"
+                               TextWrapping="Wrap"  
                                Foreground="{StaticResource ThirdColor}"
                                Padding="0,10,0,0"
                                FontSize="17">
@@ -108,7 +119,7 @@
                                Padding="0,10,0,0"
                                FontSize="17">
                         </TextBlock>
-                        
+
                         <TextBlock 
                                Text="Usage"
                                FontFamily="Lucida Fax"
