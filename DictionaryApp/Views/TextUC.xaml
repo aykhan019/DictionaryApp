@@ -6,26 +6,28 @@
              xmlns:local="clr-namespace:DictionaryApp.Views"
              mc:Ignorable="d" 
              Height="40"
-             Margin="17,0,0,0"
-             d:DesignHeight="50" 
-             d:DesignWidth="200">
+             Margin="17,0,77,0"
+             d:DesignHeight="50">
     <Grid Background="White">
-        <Label HorizontalAlignment="Center"
-               VerticalAlignment="Center"
-               Width="200" 
-               Cursor="Hand">
+        <Label HorizontalAlignment="Left"
+               VerticalAlignment="Center">
             <Label.InputBindings>
                 <MouseBinding Gesture="LeftClick" Command="{Binding SearchWordCommand}"/>
             </Label.InputBindings>
-            <TextBlock Text="{Binding Text,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+            <TextBlock HorizontalAlignment="Left"
+                       Text="{Binding Text,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                        FontFamily="Javanese Text"
                        FontSize="20"
+                       x:Name="TextTB"
+                       TextWrapping="Wrap"
+                       TextAlignment="Left"
                        Foreground="{StaticResource EighthColor}">
                 <TextBlock.Style>
                     <Style TargetType="TextBlock">
                         <Style.Triggers>
                             <Trigger Property ="IsMouseOver" Value="True">
                                 <Setter Property= "TextDecorations" Value="None"/>
+                                <Setter Property= "Cursor" Value="Hand"/>
                             </Trigger>
                             <Trigger Property ="IsMouseOver" Value="False">
                                 <Setter Property= "TextDecorations" Value="Underline"/>

@@ -13,21 +13,21 @@ namespace DictionaryApp.Helpers
             switch (en)
             {
                 case PartOfSpeech.Noun:
-                    return @"\Assets\noun.png";
+                    return Constants.NounImageSource;
                 case PartOfSpeech.Adverb:
-                    return @"\Assets\adverb.png";
+                    return Constants.AdverbImageSource;
                 case PartOfSpeech.Verb:
-                    return @"\Assets\verb.png";
+                    return Constants.VerbImageSource;
                 case PartOfSpeech.Adjective:
-                    return @"\Assets\adjective.png";
+                    return Constants.AdjectiveImageSource;
                 case PartOfSpeech.Preposition:
-                    return @"\Assets\preposition.png";
+                    return Constants.PrepositionImageSource;
                 case PartOfSpeech.Conjunction:
-                    return @"\Assets\conjunction.png"; 
+                    return Constants.ConjunctionImageSource;
                 case PartOfSpeech.Pronoun:
-                    return @"\Assets\pronoun.png";
+                    return Constants.PronounImageSource;
                 case PartOfSpeech.Interjection:
-                    return @"\Assets\interjection.png";
+                    return Constants.InterjectionImageSource;
                 default:
                     break;
             }

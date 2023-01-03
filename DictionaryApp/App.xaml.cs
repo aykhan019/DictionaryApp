@@ -23,5 +23,6 @@ namespace DictionaryApp
         public static List<string> SearchedWords { get; set; } = new List<string>();
         public static int SearchedWordsIndex { get; set; } = -1;
         public static ScrollViewer MainColumnScroll { get; internal set; }
+        public static ResourceDictionary MyDictionary { get; set; } = (ResourceDictionary)LoadComponent(new Uri("/DictionaryApp;component/Dictionaries/MyDictionary.xaml", UriKind.Relative));
     }
 }

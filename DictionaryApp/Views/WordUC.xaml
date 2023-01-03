@@ -4,8 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:DictionaryApp.Views"
-             Margin="20"
-             d:DesignWidth="800"
+             Margin="20"    
              mc:Ignorable="d">
     <Border BorderBrush="Transparent"
             CornerRadius="33"
@@ -26,7 +25,7 @@
                     <StackPanel>
                         <TextBox Style="{StaticResource SelectableTextBlockStyle}"
                              Foreground="{StaticResource SecondColor}"
-                             Text="{Binding Word}"
+                             Text="{Binding WordUCModel.Word}"
                              Padding="40,20,0,0"
                              Width="Auto"
                              FontSize="35"
@@ -36,8 +35,8 @@
                         </TextBox>
 
                         <TextBlock Style="{StaticResource PronunciationTBlockStyle}"
-                                   Text="{Binding WordDetailModel.Phonetic}"
-                                   Margin="0,-15,0,0">
+                                   Text="{Binding WordUCModel.Phonetic}"
+                                   Margin="3,-15,0,0">
                         </TextBlock>
                     </StackPanel>
                     <!--<TextBlock Style="{StaticResource MainWordTBlockStyle}"
@@ -91,7 +90,7 @@
                                Text="Frequently Used As"
                                FontFamily="Fixedys"
                                FontWeight="Bold"
-                               Padding="0,14,0,0"
+                               Padding="0,24,0,0"
                                FontSize="22"
                                Foreground="{StaticResource EighthColor}">
                     </TextBlock>
@@ -109,7 +108,7 @@
                                FontSize="17">
                         </TextBlock>
                         <TextBlock 
-                               Text="{Binding WordDetailModel.PartOfSpeechAndDefinition,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                               Text="{Binding WordUCModel.PartOfSpeechAndDefinition,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                                FontFamily="Lucida Fax"
                                FontWeight="Normal"
                                Height="Auto"
@@ -130,7 +129,7 @@
                                FontSize="17">
                         </TextBlock>
                         <TextBlock 
-                               Text="{Binding WordDetailModel.SentenceExample,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                               Text="{Binding WordUCModel.SentenceExample,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                                FontFamily="Lucida Fax"
                                FontWeight="Normal"
                                Foreground="{StaticResource FifthColor}"

@@ -17,39 +17,33 @@ namespace DictionaryApp.ViewModels
 {
     public class WordUCViewModel : BaseViewModel
     {
-		public RelayCommand ListenPronunciationCommand { get; set; }
+        public RelayCommand ListenPronunciationCommand { get; set; }
 
-		private WordDetailModel wordDetailModel;
+        private WordUCModel wordUCModel;
 
-		public WordDetailModel WordDetailModel
+        public WordUCModel WordUCModel
         {
-			get { return wordDetailModel; }
-			set { wordDetailModel = value; }
-		}
+            get { return wordUCModel; }
+            set { wordUCModel = value; }
+        }
 
-		private string word;
-
-		public string Word
-		{
-			get { return word; }
-			set { word = value; OnPropertyChanged(); }
-		}
-
-
-		public WordUCViewModel(WordDetail _wordDetail)
-		{
-            WordDetailModel = new WordDetailModel(_wordDetail);
-			Word = Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(WordDetailModel.WordDetail.Word);
+        public WordUCViewModel(WordDetail _wordDetail)
+        {
+            WordUCModel = new WordUCModel(_wordDetail);
+            WordUCModel.Word = Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(WordUCModel.WordDetail.Word);
 
             ListenPronunciationCommand = new RelayCommand((l) =>
-			{
-                using (SpeechSynthesizer synthesizer = new SpeechSynthesizer())
+            {
+                Thread t = new Thread(() =>
                 {
-                    synthesizer.SelectVoiceByHints(VoiceGender.Female);
-                    synthesizer.SetOutputToDefaultAudioDevice();
-                    synthesizer.Speak(WordDetailModel.WordDetail.Word);
-                }
-			});
+                    using (SpeechSynthesizer synthesizer = new SpeechSynthesizer())
+                    {
+                        synthesizer.SelectVoiceByHints(VoiceGender.Female);
+                        synthesizer.SetOutputToDefaultAudioDevice();
+                        synthesizer.Speak(WordUCModel.WordDetail.Word);
+                    }
+                }); t.Start();
+            });
         }
-	}
+    }
 }

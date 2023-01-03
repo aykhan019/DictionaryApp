@@ -9,8 +9,16 @@ using System.Threading.Tasks;
 
 namespace DictionaryApp.Models.WordModels
 {
-    public class WordDetailModel : BaseViewModel
+    public class WordUCModel : BaseViewModel
     {
+        private string word;
+
+        public string Word
+        {
+            get { return word; }
+            set { word = value; OnPropertyChanged(); }
+        }
+
         private WordDetail wordDetail;
 
         public WordDetail WordDetail
@@ -43,10 +51,14 @@ namespace DictionaryApp.Models.WordModels
             set { sentenceExample = value; OnPropertyChanged(); }
         }
 
-        public WordDetailModel(WordDetail _wordDetail)
+        public WordUCModel(WordDetail _wordDetail)
         {
             WordDetail = _wordDetail;
             Phonetic = $"[  {WordDetail.Phonetic}  ]";
+            if (Phonetic.Trim().Length == 0)
+            {
+                Phonetic = WordDetail.Phonetics.Where(p => p.Text.Trim().Length != 0).First().Text;
+            }
             var firstMeaning = WordDetail.Meanings[0];
             var partOfSpeech = Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(firstMeaning.PartOfSpeech);
             PartOfSpeechAndDefinition = $"{partOfSpeech} ~ \"{firstMeaning.Definitions[0].Definition}\"";

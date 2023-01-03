@@ -22,6 +22,7 @@
         </Grid.ColumnDefinitions>
 
         <Grid Grid.Column="0"
+              MinWidth="100"
               x:Name="MainColumn"
               Background="{DynamicResource MainColor}">
             <Grid.RowDefinitions>
@@ -70,7 +71,7 @@
                         <ListView.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <WrapPanel Height="Auto" Width="1100" Margin="0,20,0,0"></WrapPanel>
-                            </ItemsPanelTemplate>   
+                            </ItemsPanelTemplate>
                         </ListView.ItemsPanel>
                     </ListView>
                 </ScrollViewer>

@@ -4,14 +4,14 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:DictionaryApp.Views"
-  Margin="20"
+             Margin="20"
              Height="Auto"
              d:DesignWidth="900"
              mc:Ignorable="d">
     <Border BorderBrush="Transparent"
             CornerRadius="33"
             Background="White">
-        <Grid Background="Transparent">
+        <Grid Background="Transparent" HorizontalAlignment="Right" Width="900">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"></RowDefinition>
                 <RowDefinition Height="3*"></RowDefinition>
@@ -19,63 +19,56 @@
 
 
             <Grid Grid.Row="0">
-                <StackPanel Orientation="Horizontal"
-                            Margin="30,20,30,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="5*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+
+                <Grid Grid.Column="0">
                     <Image Height="70"
                            Width="70"
-                           Source="{Binding PartOfSpeechImageSource}">
+                           Margin="30,20,30,0"
+                           Source="{Binding WordDetailsUCModel.PartOfSpeechImageSource}">
                     </Image>
 
+                </Grid>
+
+                <Grid Grid.Column="1">
                     <TextBlock Style="{StaticResource MainWordTBlockStyle}"
-                               Text="{Binding Headline,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                               Text="{Binding WordDetailsUCModel.Headline,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                                FontFamily="Fixedys"
                                FontWeight="Bold"
-                               Margin="20,0,0,0"
-                               Padding="0,12,0,0"
+                               Padding="0,40,0,0"
                                FontSize="27"
                                Foreground="{StaticResource EighthColor}">
                     </TextBlock>
-                </StackPanel>
+                </Grid>
+
+                <Grid Grid.Column="2">
+                    <Button Command="{Binding CollapseExpandCommand}"
+                            Background="Transparent"
+                            BorderBrush="Transparent"
+                            Style="{StaticResource ExpanderButtonStyle}"
+                            Width="30"
+                            Margin="0,20,0,0"
+                            Height="30">
+                        <Button.Content>
+                            <Image Source="{Binding WordDetailsUCModel.ImageSource,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Height="30" Width="30" Margin="-5,0,0,0"></Image>
+                        </Button.Content>
+                    </Button>
+                </Grid>
             </Grid>
 
             <Grid Grid.Row="1">
                 <StackPanel Orientation="Vertical">
-                    <ListView Margin="0,20,0,20"
-                          ItemsSource="{Binding Items}"
+                    <Expander IsExpanded="{Binding WordDetailsUCModel.IsExpanded,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                              Margin="0,0,0,11">
+                        <StackPanel Orientation="Vertical">
+                            <ListView Margin="0,20,0,20"
+                          ItemsSource="{Binding WordDetailsUCModel.Items}"
                           BorderBrush="Transparent"
                           ItemContainerStyle="{StaticResource LvItemStyle}">
-                        <ListBox.Template>
-                            <ControlTemplate TargetType="ListBox">
-                                <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderBrush}">
-                                    <ItemsPresenter/>
-                                </Border>
-                            </ControlTemplate>
-                        </ListBox.Template>
-                    </ListView>
-
-                    <TabControl Style="{StaticResource TabControlStyle}" Margin="42,0,0,0">
-                        <TabItem Header="Synonyms" BorderBrush="Transparent" Background="Transparent">
-                            <ListView ItemsSource="{Binding Synonyms}"
-                                      BorderBrush="Transparent"
-                                      ItemContainerStyle="{StaticResource LvItemStyle}">
-                                <ListBox.Template>
-                                    <ControlTemplate TargetType="ListBox">
-                                        <Border BorderBrush="Transparent" BorderThickness="0">
-                                            <ItemsPresenter/>
-                                        </Border>
-                                    </ControlTemplate>
-                                </ListBox.Template>
-
-                                <ListView.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <WrapPanel Height="120" Orientation="Vertical"></WrapPanel>
-                                    </ItemsPanelTemplate>
-                                </ListView.ItemsPanel>
-                            </ListView>
-                        </TabItem>
-                        <TabItem Header="Antonyms" BorderBrush="Transparent">
-                            <ListView ItemsSource="{Binding Antonyms}"
-                                      ItemContainerStyle="{StaticResource LvItemStyle}">
                                 <ListBox.Template>
                                     <ControlTemplate TargetType="ListBox">
                                         <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderBrush}">
@@ -83,15 +76,57 @@
                                         </Border>
                                     </ControlTemplate>
                                 </ListBox.Template>
-
-                                <ListView.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <WrapPanel Height="120" Orientation="Vertical"></WrapPanel>
-                                    </ItemsPanelTemplate>
-                                </ListView.ItemsPanel>
                             </ListView>
-                        </TabItem>
-                    </TabControl>
+
+                            <TabControl Style="{StaticResource TabControlStyle}" Margin="42,0,42,20">
+                                <TabItem Header="Synonyms" BorderBrush="Transparent" Background="Transparent">
+                                    <ScrollViewer HorizontalScrollBarVisibility="Auto"
+                                                  Padding="0,0,0,30"
+                                                  VerticalScrollBarVisibility="Disabled">
+                                        <ListView ItemsSource="{Binding WordDetailsUCModel.Synonyms}"
+                                      BorderBrush="Transparent"
+                                      ItemContainerStyle="{StaticResource LvItemStyle}">
+                                            <ListBox.Template>
+                                                <ControlTemplate TargetType="ListBox">
+                                                    <Border BorderBrush="Transparent" BorderThickness="0">
+                                                        <ItemsPresenter/>
+                                                    </Border>
+                                                </ControlTemplate>
+                                            </ListBox.Template>
+
+                                            <ListView.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <WrapPanel Height="120" Orientation="Vertical"></WrapPanel>
+                                                </ItemsPanelTemplate>
+                                            </ListView.ItemsPanel>
+                                        </ListView>
+                                    </ScrollViewer>
+                                </TabItem>
+                                <TabItem Header="Antonyms" BorderBrush="Transparent">
+                                    <ScrollViewer HorizontalScrollBarVisibility="Auto"
+                                                  Padding="0,0,0,20"
+                                                  VerticalScrollBarVisibility="Disabled">
+                                        <ListView ItemsSource="{Binding WordDetailsUCModel.Antonyms}"
+                                      ItemContainerStyle="{StaticResource LvItemStyle}">
+                                            <ListBox.Template>
+                                                <ControlTemplate TargetType="ListBox">
+                                                    <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderBrush}">
+                                                        <ItemsPresenter/>
+                                                    </Border>
+                                                </ControlTemplate>
+                                            </ListBox.Template>
+
+                                            <ListView.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <WrapPanel Height="120" Orientation="Vertical"></WrapPanel>
+                                                </ItemsPanelTemplate>
+                                            </ListView.ItemsPanel>
+                                        </ListView>
+                                    </ScrollViewer>
+                                </TabItem>
+                            </TabControl>
+                        </StackPanel>
+                    </Expander>
                 </StackPanel>
             </Grid>
         </Grid>
