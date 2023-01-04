@@ -55,6 +55,6 @@ namespace DictionaryApp
             //    view.SearchGrid.Height= view.SearchGrid.ActualHeight + 20;
             //}
             //view.SearchTB.Height = view.SearchTB.ActualHeight + 20;
-        }
+            }
     }
 }
