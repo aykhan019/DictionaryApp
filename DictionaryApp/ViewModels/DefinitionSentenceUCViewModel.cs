@@ -179,7 +179,6 @@ namespace DictionaryApp.ViewModels
                     paragraph.Inlines.Add(example_run);
                     paragraph.Margin = new Thickness(0, 20, 0, 0);
 
-                    App.Page.Document.Blocks.Remove(App.Page.Document.Blocks.Where(b => b == paragraph).First());
 
                     ImageSource = Constants.AddSignImageSource;
                     ToolTipText = Constants.ToolTipTextAdd;
