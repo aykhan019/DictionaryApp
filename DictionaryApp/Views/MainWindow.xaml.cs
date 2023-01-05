@@ -1,9 +1,12 @@
-﻿using DictionaryApp.Models;
+﻿using DictionaryApp.Helpers;
+using DictionaryApp.Models;
 using DictionaryApp.ViewModels;
 using DictionaryApp.Views;
 using System.Speech.Synthesis;
 using System.Threading;
 using System.Windows;
+using System.Windows.Documents;
+using System.Windows.Media;
 
 namespace DictionaryApp
 {
@@ -20,10 +23,23 @@ namespace DictionaryApp
             App.MainColumn = homePageView.MainColumn;
             App.SecondColumn = homePageView.SecondColumn;
             var homePageViewModel = new HomePageViewModel();
+            App.Page = homePageView.Page;
+
+            var paragraph = new Paragraph();
+            var run = new Run(Constants.VocabularyHeadline);
+            run.Foreground = Brushes.Black;
+            run.FontFamily = new FontFamily(Constants.VocabularyHeadlineFontFamily);
+            run.FontWeight = FontWeights.Bold;
+            run.FontSize = Constants.HeadlineFontSize;
+            paragraph.Inlines.Add(run);
+            paragraph.TextAlignment= TextAlignment.Center;
+            App.Page.Document.Blocks.Add(paragraph);
+
             homePageView.DataContext = homePageViewModel;
             App.MainColumnScroll = homePageView.MainColumnScroll;
             App.HomePageVM = homePageViewModel;
             App.PageGrid.Children.Add(homePageView);
+            //App.AddTextToPage(Constants.VocabularyHeadline, Constants.VocabularyHeadlineFontFamily, Constants.HeadlineFontSize, Brushes.Black, FontWeights.Bold, TextAlignment.Center);
         }
 
         private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -49,12 +65,6 @@ namespace DictionaryApp
                 }
             }
             view.SearchTB.Width = width - 60;
-            //if (App.MainColumnInitialWidth != width)
-            //{
-            //    view.SearchTB.Height = App.SearchTBHeight;
-            //    view.SearchGrid.Height= view.SearchGrid.ActualHeight + 20;
-            //}
-            //view.SearchTB.Height = view.SearchTB.ActualHeight + 20;
         }
     }
 }

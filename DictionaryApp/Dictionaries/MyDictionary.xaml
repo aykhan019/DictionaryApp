@@ -14,6 +14,53 @@
     <!--#endregion-->
 
     <!--#region Text Box Styles -->
+    <Style TargetType="{x:Type TextBox}">
+        <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource FifthColor}"/>
+        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="KeyboardNavigation.TabNavigation" Value="None"/>
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="AllowDrop" Value="True"/>
+        <Setter Property="ScrollViewer.PanningMode" Value="VerticalFirst"/>
+        <Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
+        <Setter Property="TextWrapping" Value="Wrap"/>
+        <Setter Property="Padding" Value="10,5,10,0"/>
+        <Setter Property="FontFamily" Value="Cascadia Code SemiBold"/>
+        <Setter Property="FontSize" Value="26"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TextBox}">
+                    <Border x:Name="border" BorderBrush="{DynamicResource FifthColor}" BorderThickness="1" Background="{TemplateBinding Background}" SnapsToDevicePixels="True" CornerRadius="4">
+                        <ScrollViewer x:Name="PART_ContentHost" Focusable="False" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" TargetName="border" Value="0.56"/>
+                            <Setter Property="Foreground" Value="{DynamicResource FifthColor}"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource SecondColor}"/>
+                        </Trigger>
+                        <Trigger Property="IsKeyboardFocused" Value="True">
+                            <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource SecondColor}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsInactiveSelectionHighlightEnabled" Value="True"/>
+                    <Condition Property="IsSelectionActive" Value="False"/>
+                </MultiTrigger.Conditions>
+                <Setter Property="SelectionBrush" Value="{StaticResource FifthColor}"/>
+            </MultiTrigger>
+        </Style.Triggers>
+    </Style>
+
     <Style x:Key="SelectableTextBlockStyle" TargetType="{x:Type TextBox}">
         <Setter Property="FontFamily" Value="Lucida Fax"/>
         <Setter Property="FontSize" Value="17"/>
@@ -221,10 +268,11 @@
 
     <!--#region List View Styles -->
     <Style x:Key="LvItemStyle" TargetType="ListViewItem">
+        <Setter Property="ScrollViewer.CanContentScroll" Value="True"></Setter>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ListViewItem">
-                    <Border x:Name="border" Background="Transparent">
+                    <Border ScrollViewer.CanContentScroll="True" x:Name="border" Background="Transparent">
                         <!--<VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">
                                 <VisualState x:Name="Normal" />
@@ -255,10 +303,6 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-    </Style>
-
-    <Style x:Key="myHeaderStyle" TargetType="{x:Type GridViewColumnHeader}">
-        <Setter Property="Visibility" Value="Collapsed" />
     </Style>
     <!--#endregion-->
 
@@ -657,6 +701,10 @@
             </Setter.Value>
         </Setter>
     </Style>
+    <!--#endregion-->
+
+    <!--#region TabItem Styles -->
+
     <!--#endregion-->
 
     <!--#region Expander Styles -->

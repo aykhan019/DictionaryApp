@@ -6,12 +6,15 @@ using DictionaryApp.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Drawing.Text;
 using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Threading;
 using static System.Net.Mime.MediaTypeNames;
@@ -47,7 +50,6 @@ namespace DictionaryApp.ViewModels
             get { return color; }
             set { color = value; OnPropertyChanged(); }
         }
-
 
         public HomePageViewModel()
         {
@@ -137,6 +139,7 @@ namespace DictionaryApp.ViewModels
                                 var definitionSentenceUC = new DefinitionSentenceUC();
                                 var definitionSentenceUCVM = new DefinitionSentenceUCViewModel()
                                 {
+                                    Word = Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(SearchText.Trim()),
                                     Definition = definition.Definition,
                                     SentenceExample = definition.Example
                                 };
@@ -151,6 +154,7 @@ namespace DictionaryApp.ViewModels
                             var listOfSynonyms = new List<string>();
                             var listOfAntonyms = new List<string>();
                             //listOfMeanings.ForEach(l => l.Where(b => b.PartOfSpeech == pos).ToList().ForEach(m => listOfSynonyms.AddRange(m.Synonyms)));
+
                             listOfMeanings.ForEach(l => l
                                           .Where(b => b.PartOfSpeech == pos)
                                           .ToList()
@@ -165,6 +169,9 @@ namespace DictionaryApp.ViewModels
                                               });
                                           }));
 
+                            listOfSynonyms = listOfSynonyms.Distinct().ToList();
+                            listOfAntonyms = listOfAntonyms.Distinct().ToList();
+
                             if (listOfSynonyms.Count > 0)
                                 wordDetailUCVM.WordDetailsUCModel.Synonyms = listOfSynonyms.TextsToTextUCs();
                             else
@@ -175,7 +182,7 @@ namespace DictionaryApp.ViewModels
                                 noSynonymUC.TextTB.Foreground = App.MyDictionary["SeventhColor"] as SolidColorBrush;
                                 var noSynonymUCVM = new TextUCViewModel(Constants.NoSynonyms);
                                 noSynonymUCVM.SearchWordCommand = null;
-                                noSynonymUC.DataContext= noSynonymUCVM;
+                                noSynonymUC.DataContext = noSynonymUCVM;
                                 wordDetailUCVM.WordDetailsUCModel.Synonyms.Add(noSynonymUC);
                             }
 
@@ -207,7 +214,7 @@ namespace DictionaryApp.ViewModels
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message);
+                    MessageBox.Show("An Error Occured : " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
             });

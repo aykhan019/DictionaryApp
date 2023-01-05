@@ -57,6 +57,7 @@
             <Grid Grid.Row="1">
                 <ScrollViewer HorizontalScrollBarVisibility="Disabled"
                               VerticalScrollBarVisibility="Auto"
+                              CanContentScroll="True"
                               x:Name="MainColumnScroll">
                     <ListView ItemsSource="{Binding Items}"
                           ItemContainerStyle="{StaticResource LvItemStyle}">
@@ -81,10 +82,11 @@
         <Grid Grid.Column="1"
               x:Name="SecondColumn"
               Background="{DynamicResource MainColor}">
-            <RichTextBox Style="{StaticResource PageRichTextBox}"
-                         x:Name="Page">
+            <RichTextBox x:Name="Page"
+                         IsReadOnly="False"
+                         Padding="40,0,40,0">
 
             </RichTextBox>
         </Grid>
     </Grid>
-</UserControl>
+</UserControl>  

@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:DictionaryApp.Views"
              Margin="20"
              Height="Auto"
+             ScrollViewer.CanContentScroll="True"
              d:DesignWidth="900"
              mc:Ignorable="d">
     <Border BorderBrush="Transparent"
@@ -78,25 +79,27 @@
                                 </ListBox.Template>
                             </ListView>
 
-                            <TabControl Style="{StaticResource TabControlStyle}" Margin="42,0,42,20">
-                                <TabItem Header="Synonyms" BorderBrush="Transparent" Background="Transparent">
+                            <TabControl Style="{StaticResource TabControlStyle}" Margin="42,0,42,20" ScrollViewer.CanContentScroll="True">
+                                <TabItem Header="Synonyms" BorderBrush="Transparent" Background="Transparent"
+                                         ScrollViewer.CanContentScroll="True">
                                     <ScrollViewer HorizontalScrollBarVisibility="Auto"
                                                   Padding="0,0,0,30"
                                                   VerticalScrollBarVisibility="Disabled">
                                         <ListView ItemsSource="{Binding WordDetailsUCModel.Synonyms}"
-                                      BorderBrush="Transparent"
-                                      ItemContainerStyle="{StaticResource LvItemStyle}">
+                                                  BorderBrush="Transparent"
+                                                  ScrollViewer.CanContentScroll="True"
+                                                  ItemContainerStyle="{StaticResource LvItemStyle}">
                                             <ListBox.Template>
                                                 <ControlTemplate TargetType="ListBox">
                                                     <Border BorderBrush="Transparent" BorderThickness="0">
-                                                        <ItemsPresenter/>
+                                                        <ItemsPresenter ScrollViewer.CanContentScroll="True"/>
                                                     </Border>
                                                 </ControlTemplate>
                                             </ListBox.Template>
 
                                             <ListView.ItemsPanel>
                                                 <ItemsPanelTemplate>
-                                                    <WrapPanel Height="120" Orientation="Vertical"></WrapPanel>
+                                                    <WrapPanel ScrollViewer.CanContentScroll="True" Height="120" Orientation="Vertical"></WrapPanel>
                                                 </ItemsPanelTemplate>
                                             </ListView.ItemsPanel>
                                         </ListView>
@@ -104,10 +107,10 @@
                                 </TabItem>
                                 <TabItem Header="Antonyms" BorderBrush="Transparent">
                                     <ScrollViewer HorizontalScrollBarVisibility="Auto"
-                                                  Padding="0,0,0,20"
+                                                  Padding="0,0,0,30"
                                                   VerticalScrollBarVisibility="Disabled">
                                         <ListView ItemsSource="{Binding WordDetailsUCModel.Antonyms}"
-                                      ItemContainerStyle="{StaticResource LvItemStyle}">
+                                                  ItemContainerStyle="{StaticResource LvItemStyle}">
                                             <ListBox.Template>
                                                 <ControlTemplate TargetType="ListBox">
                                                     <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderBrush}">
