@@ -1,4 +1,5 @@
 ﻿using DictionaryApp.Helpers;
+using DictionaryApp.Models;
 using DictionaryApp.ViewModels;
 using DictionaryApp.Views;
 using System;
@@ -28,6 +29,7 @@ namespace DictionaryApp
         public static ScrollViewer MainColumnScroll { get; internal set; }
         public static ResourceDictionary MyDictionary { get; set; } = (ResourceDictionary)LoadComponent(new Uri("/DictionaryApp;component/Dictionaries/MyDictionary.xaml", UriKind.Relative));
         public static RichTextBox Page { get; set; }
-        public static int WordCountInPage { get; set; } = 1;
+        public static int WordCountInPage { get; set; } = 0;
+        public static List<PageItemModel> AddedWords { get; set; } = new List<PageItemModel>();
     }
 }

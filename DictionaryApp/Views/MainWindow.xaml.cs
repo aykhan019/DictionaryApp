@@ -26,13 +26,16 @@ namespace DictionaryApp
             App.Page = homePageView.Page;
 
             var paragraph = new Paragraph();
+            App.Page.Document.Blocks.Clear();
+            paragraph.Name = "DontDeleteBlock";
+            paragraph.Margin = new Thickness(0);
             var run = new Run(Constants.VocabularyHeadline);
             run.Foreground = Brushes.Black;
             run.FontFamily = new FontFamily(Constants.VocabularyHeadlineFontFamily);
             run.FontWeight = FontWeights.Bold;
             run.FontSize = Constants.HeadlineFontSize;
             paragraph.Inlines.Add(run);
-            paragraph.TextAlignment= TextAlignment.Center;
+            paragraph.TextAlignment = TextAlignment.Center;
             App.Page.Document.Blocks.Add(paragraph);
 
             homePageView.DataContext = homePageViewModel;
@@ -63,8 +66,14 @@ namespace DictionaryApp
                     var marginFromLeft = (width - 100) / 2;
                     la.Margin = new Thickness(marginFromLeft, 50, 0, 0);
                 }
+                if (item is NoResultUC nr)
+                {
+                    var fromLeft = (App.MainColumn.ActualWidth - 516) / 2;
+                    nr.Margin = new Thickness(fromLeft, 20, 0, 0);
+                }
             }
             view.SearchTB.Width = width - 60;
+
         }
     }
 }

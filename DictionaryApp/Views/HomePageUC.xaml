@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:DictionaryApp.Views"
+             xmlns:local="clr-namespace:DictionaryApp.Views" xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              mc:Ignorable="d">
     <UserControl.InputBindings>
         <KeyBinding Modifiers="Control"
@@ -35,10 +35,28 @@
                 <StackPanel Orientation="Horizontal">
                     <TextBox Style="{StaticResource SearchTextBoxStyle}"
                              x:Name="SearchTB"
+                             Foreground="{Binding Foreground,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                              Text="{Binding SearchText,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
                         <TextBox.InputBindings>
                             <KeyBinding Key="Return" Command="{Binding SearchCommand}"></KeyBinding>
                         </TextBox.InputBindings>
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="MouseEnter">
+                                <i:InvokeCommandAction Command="{Binding MouseEnterCommand}"/>
+                            </i:EventTrigger>
+
+                            <i:EventTrigger EventName="MouseLeave">
+                                <i:InvokeCommandAction Command="{Binding MouseLeaveCommand}"/>
+                            </i:EventTrigger>
+
+                            <i:EventTrigger EventName="GotFocus">
+                                <i:InvokeCommandAction Command="{Binding IsFocusedCommand}"/>
+                            </i:EventTrigger>
+
+                            <i:EventTrigger EventName="LostFocus">
+                                <i:InvokeCommandAction Command="{Binding IsNotFocusedCommand}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
                     </TextBox>
                     <Button Style="{StaticResource SearchButtonStyle}"
                             Command="{Binding SearchCommand}">
@@ -84,7 +102,8 @@
               Background="{DynamicResource MainColor}">
             <RichTextBox x:Name="Page"
                          IsReadOnly="False"
-                         Padding="40,0,40,0">
+                         Style="{StaticResource PageRichTextBox}"
+                         Padding="40,40,40,0">
 
             </RichTextBox>
         </Grid>

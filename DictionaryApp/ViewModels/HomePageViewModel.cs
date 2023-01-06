@@ -27,6 +27,11 @@ namespace DictionaryApp.ViewModels
         public RelayCommand GoBackCommand { get; set; }
         public RelayCommand GoForwardCommand { get; set; }
 
+        public RelayCommand MouseEnterCommand { get; set; }
+        public RelayCommand MouseLeaveCommand { get; set; }
+        public RelayCommand IsFocusedCommand { get; set; }
+        public RelayCommand IsNotFocusedCommand { get; set; }
+
         private string searchText;
 
         public string SearchText
@@ -51,11 +56,59 @@ namespace DictionaryApp.ViewModels
             set { color = value; OnPropertyChanged(); }
         }
 
+        private bool IsFocused;
+
+        private SolidColorBrush foreground;
+
+        public SolidColorBrush Foreground
+        {
+            get { return foreground; }
+            set { foreground = value; OnPropertyChanged(); }
+        }
+
+        public bool AddWord { get; set; } = true;
+
         public HomePageViewModel()
         {
+            Foreground = App.MyDictionary["ThirdColor"] as SolidColorBrush;
+
             ScrollColor = App.MyDictionary["MainColorDarker"] as SolidColorBrush;
 
             SearchText = Constants.SearchDefaultText;
+
+            MouseEnterCommand = new RelayCommand((m) =>
+            {
+                if (SearchText.Trim() == Constants.SearchDefaultText)
+                {
+                    SearchText = String.Empty;
+                }
+            });
+
+            MouseLeaveCommand = new RelayCommand((m) =>
+            {
+                if (SearchText.Trim() == String.Empty && IsFocused == false)
+                {
+                    SearchText = Constants.SearchDefaultText;
+                }
+            });
+
+            IsFocusedCommand = new RelayCommand((i) =>
+            {
+                IsFocused = true;
+                Foreground = App.MyDictionary["FifthColor"] as SolidColorBrush;
+            });
+
+            IsNotFocusedCommand = new RelayCommand((i) =>
+            {
+                IsFocused = false;
+                string text = SearchText.Trim();
+                if (text == String.Empty || text == Constants.SearchDefaultText)
+                {
+                    Foreground = App.MyDictionary["ThirdColor"] as SolidColorBrush;
+
+                    SearchText = Constants.SearchDefaultText;
+                }
+            });
 
             GoBackCommand = new RelayCommand((g) =>
             {
@@ -64,6 +117,7 @@ namespace DictionaryApp.ViewModels
                     App.SearchedWordsIndex--;
                     SearchText = App.SearchedWords[App.SearchedWordsIndex];
                     SearchCommand.Execute(null);
+                    AddWord = false;
                 }
             });
 
@@ -82,7 +136,7 @@ namespace DictionaryApp.ViewModels
                 try
                 {
                     SearchText = SearchText.Trim();
-                    if (SearchText == string.Empty)
+                    if (SearchText == string.Empty || SearchText == Constants.SearchDefaultText)
                         return;
                     Items.Clear();
                     var loadingAnimation = new LoadingAnimation();
@@ -90,23 +144,13 @@ namespace DictionaryApp.ViewModels
                     loadingAnimation.Margin = new Thickness(marginFromLeft, 50, 0, 0);
                     Items.Add(loadingAnimation);
                     App.MainColumnScroll.ScrollToTop();
-                    string lastWord = String.Empty;
-                    if (App.SearchedWords.Count > 0)
-                    {
-                        lastWord = App.SearchedWords.Last();
-                    }
-
-                    if (lastWord != String.Empty)
-                    {
-                        if (lastWord != SearchText)
-                        {
-                            App.SearchedWords.Add(SearchText);
-                            App.SearchedWordsIndex++;
-                        }
-                    }
 
                     var results = await DictionaryService.GetWordDetail(SearchText);
-
+                    if (AddWord)
+                    {
+                        App.SearchedWords.Add(SearchText);
+                        App.SearchedWordsIndex++;
+                    }
                     Items.Clear();
 
                     if (results != null)
@@ -147,6 +191,12 @@ namespace DictionaryApp.ViewModels
                                 {
                                     definitionSentenceUCVM.SentenceExample = Constants.NoSentenceExample;
                                 }
+                                definitionSentenceUCVM.model = new PageItemModel
+                                {
+                                    Definition = definitionSentenceUCVM.Definition,
+                                    SentenceExample = definitionSentenceUCVM.SentenceExample,
+                                    Word = definitionSentenceUCVM.Word,
+                                };
                                 definitionSentenceUC.DataContext = definitionSentenceUCVM;
                                 wordDetailUCVM.WordDetailsUCModel.Items.Add(definitionSentenceUC);
                             }
@@ -217,6 +267,7 @@ namespace DictionaryApp.ViewModels
                     MessageBox.Show("An Error Occured : " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
+                AddWord = true;
             });
 
         }

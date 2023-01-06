@@ -1,5 +1,6 @@
 ﻿using DictionaryApp.Commands;
 using DictionaryApp.Helpers;
+using DictionaryApp.Models;
 using DictionaryApp.Views;
 using System;
 using System.Collections.Generic;
@@ -53,10 +54,14 @@ namespace DictionaryApp.ViewModels
             set { toolTipText = value; OnPropertyChanged(); }
         }
 
-        public string RankOfWord { get; set; }
+        public PageItemModel model { get; set; }
+
+        public string Text { get; set; } = string.Empty;
 
         public DefinitionSentenceUCViewModel()
         {
+          
+
             AddRemoveCommand = new RelayCommand((a) =>
             {
                 string example = string.Empty;
@@ -65,123 +70,37 @@ namespace DictionaryApp.ViewModels
                 else
                     example = "Example";
 
+
                 if (ImageSource == Constants.AddSignImageSource)
                 {
                     ImageSource = Constants.RemoveSignImageSource;
                     ToolTipText = Constants.ToolTipTextRemove;
 
-                    Paragraph paragraph = new Paragraph();
+                    model.Rank = ++App.WordCountInPage;
 
-                    RankOfWord = App.WordCountInPage.ToRoman();
-                    Run no_of_word_run = new Run(RankOfWord + "." + Constants.Space);
-                    no_of_word_run.Foreground = Brushes.Black;
-                    no_of_word_run.FontFamily = new FontFamily(Constants.VocabularyMainFontFamily);
-                    no_of_word_run.FontWeight = FontWeights.Bold;
-                    no_of_word_run.FontSize = Constants.MainFontSize;
-
-
-                    Run word_run = new Run(Word);
-                    //word_run.Foreground = Constants.WantedColor;
-                    word_run.Foreground = App.MyDictionary["SeventhColor"] as SolidColorBrush;
-                    word_run.FontFamily = new FontFamily(Constants.VocabularyMainFontFamily);
-                    word_run.FontWeight = FontWeights.Bold;
-                    word_run.FontSize = Constants.MainFontSize;
-
-                    Run dash_run = new Run(Constants.Dash);
-                    dash_run.Foreground = Brushes.Black;
-                    dash_run.FontFamily = new FontFamily(Constants.VocabularyMainFontFamily);
-                    dash_run.FontWeight = FontWeights.Bold;
-                    dash_run.FontSize = Constants.MainFontSize;
-
-                    Run definition_run = new Run(Definition);
-                    definition_run.Foreground = Brushes.Black;
-                    definition_run.FontFamily = new FontFamily(Constants.VocabularyMainFontFamily);
-                    definition_run.FontWeight = FontWeights.Bold;
-                    definition_run.FontSize = Constants.MainFontSize;
-
-                    Run e_run = new Run("Example - ");
-                    e_run.Foreground = Brushes.Black;
-                    e_run.FontFamily = new FontFamily(Constants.VocabularyMainFontFamily);
-                    e_run.FontWeight = FontWeights.Light;
-                    e_run.FontSize = Constants.MainFontSize;
-                    e_run.TextDecorations = TextDecorations.Underline;
-
-                    Run example_run = new Run(SentenceExample);
-                    example_run.Foreground = Brushes.Black;
-                    example_run.FontFamily = new FontFamily(Constants.VocabularyMainFontFamily);
-                    example_run.FontWeight = FontWeights.Light;
-                    example_run.FontSize = Constants.MainFontSize;
-                    example_run.TextDecorations = TextDecorations.Underline;
-
-                    paragraph.Inlines.Add(no_of_word_run);
-                    paragraph.Inlines.Add(word_run);
-                    paragraph.Inlines.Add(dash_run);
-                    paragraph.Inlines.Add(definition_run);
-                    paragraph.Inlines.Add(Environment.NewLine);
-                    paragraph.Inlines.Add(e_run);
-
-                    paragraph.Inlines.Add(example_run);
-                    paragraph.Margin = new Thickness(0, 20, 0, 0);
-                    App.Page.Document.Blocks.Add(paragraph);
+                    App.Page.AddParagraph(model);
+                    App.AddedWords.Add(model);
                     App.Page.ScrollToEnd();
-                    App.WordCountInPage++;
                 }
                 else
                 {
-                    Paragraph paragraph = new Paragraph();
+                    var list = App.Page.Document.Blocks.Where(x => (x as Paragraph).Name != "DontDeleteBlock").ToList();
 
-                    Run no_of_word_run = new Run(RankOfWord + "." + Constants.Space);
-                    no_of_word_run.Foreground = Brushes.Black;
-                    no_of_word_run.FontFamily = new FontFamily(Constants.VocabularyMainFontFamily);
-                    no_of_word_run.FontWeight = FontWeights.Bold;
-                    no_of_word_run.FontSize = Constants.MainFontSize;
+                    foreach (var item in list)
+                    {
+                        App.Page.Document.Blocks.Remove(item);
+                    }
 
-                    Run word_run = new Run(Word);
-                    //word_run.Foreground = Constants.WantedColor;
-                    word_run.Foreground = App.MyDictionary["SeventhColor"] as SolidColorBrush;
-                    word_run.FontFamily = new FontFamily(Constants.VocabularyMainFontFamily);
-                    word_run.FontWeight = FontWeights.Bold;
-                    word_run.FontSize = Constants.MainFontSize;
+                    App.AddedWords.RemoveAll(x => x.Definition == model.Definition &&
+                                                  x.SentenceExample == model.SentenceExample &&
+                                                  x.Word == model.Word &&
+                                                  x.Rank == model.Rank);
+                    App.WordCountInPage = 0;
 
-                    Run dash_run = new Run(Constants.Dash);
-                    dash_run.Foreground = Brushes.Black;
-                    dash_run.FontFamily = new FontFamily(Constants.VocabularyMainFontFamily);
-                    dash_run.FontWeight = FontWeights.Bold;
-                    dash_run.FontSize = Constants.MainFontSize;
-
-                    Run definition_run = new Run(Definition);
-                    definition_run.Foreground = Brushes.Black;
-                    definition_run.FontFamily = new FontFamily(Constants.VocabularyMainFontFamily);
-                    definition_run.FontWeight = FontWeights.Bold;
-                    definition_run.FontSize = Constants.MainFontSize;
-
-                    Run e_run = new Run("Example - ");
-                    e_run.Foreground = Brushes.Black;
-                    e_run.FontFamily = new FontFamily(Constants.VocabularyMainFontFamily);
-                    e_run.FontWeight = FontWeights.Light;
-                    e_run.FontSize = Constants.MainFontSize;
-                    e_run.TextDecorations = TextDecorations.Underline;
-
-                    Run example_run = new Run(SentenceExample);
-                    example_run.Foreground = Brushes.Black;
-                    example_run.FontFamily = new FontFamily(Constants.VocabularyMainFontFamily);
-                    example_run.FontWeight = FontWeights.Light;
-                    example_run.FontSize = Constants.MainFontSize;
-                    example_run.TextDecorations = TextDecorations.Underline;
-
-                    paragraph.Inlines.Add(no_of_word_run);
-                    paragraph.Inlines.Add(word_run);
-                    paragraph.Inlines.Add(dash_run);
-                    paragraph.Inlines.Add(definition_run);
-                    paragraph.Inlines.Add(Environment.NewLine);
-                    paragraph.Inlines.Add(e_run);
-
-                    paragraph.Inlines.Add(example_run);
-                    paragraph.Margin = new Thickness(0, 20, 0, 0);
+                    App.Page.AddWordsToView();
 
                     ImageSource = Constants.AddSignImageSource;
                     ToolTipText = Constants.ToolTipTextAdd;
-                    App.WordCountInPage--;
                 }
             });
         }

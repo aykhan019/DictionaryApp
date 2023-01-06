@@ -15,20 +15,23 @@
                      Background="Transparent"
                      FontSize="30"
                      Margin="0,20,0,0"
+                     Style="{StaticResource SelectableTextBlockStyle}"
                      BorderBrush="Transparent"
                      FontFamily="Javanese Text"
                      TextAlignment="Center"
+                     TextWrapping="Wrap"
                      Width="200" Height="55">
             </TextBox>
             <TextBox Text=" We cannot find the word you are searching for, maybe a little spelling mistake?"
                      Foreground="{StaticResource FifthColor}"
                      Background="Transparent"
+                     Style="{StaticResource SelectableTextBlockStyle}"
                      FontSize="24"
                      BorderBrush="Transparent"
                      TextWrapping="Wrap"
                      FontFamily="Javanese Text"
                      TextAlignment="Center"
-                     Height="105" Width="516">
+                     Height="125" Width="516">
             </TextBox>
         </StackPanel>
     </Grid>

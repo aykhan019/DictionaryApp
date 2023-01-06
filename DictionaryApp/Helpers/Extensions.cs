@@ -1,4 +1,5 @@
-﻿using DictionaryApp.ViewModels;
+﻿using DictionaryApp.Models;
+using DictionaryApp.ViewModels;
 using DictionaryApp.Views;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace DictionaryApp.Helpers
 {
@@ -53,6 +55,81 @@ namespace DictionaryApp.Helpers
                 newList.Add(textUC);
             });
             return new ObservableCollection<UIElement>(newList);
+        }
+
+        public static string GetText(this RichTextBox rtb)
+        {
+            TextRange textRange = new TextRange(rtb.Document.ContentStart, rtb.Document.ContentEnd);
+
+            string rtbContent = textRange.Text;
+
+            return rtbContent;
+        }
+
+        public static string AddParagraph(this RichTextBox rtb, PageItemModel model)
+        {
+            string Text = "";
+
+            Paragraph paragraph = new Paragraph();
+
+            Run no_of_word_run = new Run(model.Rank.ToRoman() + "." + Constants.Space);
+            no_of_word_run.Foreground = Brushes.Black;
+            no_of_word_run.FontFamily = new FontFamily(Constants.VocabularyMainFontFamily);
+            no_of_word_run.FontWeight = FontWeights.Bold;
+            no_of_word_run.FontSize = Constants.MainFontSize;
+
+            Run word_run = new Run(model.Word);
+            //word_run.Foreground = Constants.WantedColor;
+            word_run.Foreground = App.MyDictionary["SeventhColor"] as SolidColorBrush;
+            word_run.FontFamily = new FontFamily(Constants.VocabularyMainFontFamily);
+            word_run.FontWeight = FontWeights.Bold;
+            word_run.FontSize = Constants.MainFontSize;
+
+            Run dash_run = new Run(Constants.Dash);
+            dash_run.Foreground = Brushes.Black;
+            dash_run.FontFamily = new FontFamily(Constants.VocabularyMainFontFamily);
+            dash_run.FontWeight = FontWeights.Bold;
+            dash_run.FontSize = Constants.MainFontSize;
+
+            Run definition_run = new Run(model.Definition);
+            definition_run.Foreground = Brushes.Black;
+            definition_run.FontFamily = new FontFamily(Constants.VocabularyMainFontFamily);
+            definition_run.FontWeight = FontWeights.Bold;
+            definition_run.FontSize = Constants.MainFontSize;
+
+            Run example_run = new Run($"Example - {model.SentenceExample}");
+            example_run.Foreground = Brushes.Black;
+            example_run.FontFamily = new FontFamily(Constants.VocabularyMainFontFamily);
+            example_run.FontWeight = FontWeights.Light;
+            example_run.FontSize = Constants.MainFontSize;
+            example_run.TextDecorations = TextDecorations.Underline;
+
+            paragraph.Inlines.Add(no_of_word_run);
+            paragraph.Inlines.Add(word_run);
+            paragraph.Inlines.Add(dash_run);
+            paragraph.Inlines.Add(definition_run);
+            paragraph.Inlines.Add(new Run("\n"));
+            paragraph.Inlines.Add(example_run);
+
+            Text += no_of_word_run.Text;
+            Text += word_run.Text;
+            Text += dash_run.Text;
+            Text += definition_run.Text;
+            Text += "\n";
+            Text += example_run.Text;
+
+            paragraph.Margin = new Thickness(0, 20, 0, 0);
+            rtb.Document.Blocks.Add(paragraph);
+            return Text;
+        }
+
+        public static void AddWordsToView(this RichTextBox rtb)
+        {
+            foreach (var model in App.AddedWords)
+            {
+                model.Rank = ++App.WordCountInPage;
+                rtb.AddParagraph(model);
+            }
         }
 
         public static string ToRoman(this int number)

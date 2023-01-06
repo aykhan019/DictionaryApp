@@ -35,7 +35,7 @@ namespace DictionaryApp.Commands
 
         public void Execute(object parameter)
         {
-            _execute(parameter);
+               _execute(parameter);
         }
     }
 }
