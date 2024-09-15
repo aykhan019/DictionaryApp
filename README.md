@@ -24,4 +24,4 @@ A simple WPF (Windows Presentation Foundation) application built with C# to look
 [![Dictionary App Demo](https://media.aykhan.net/thumbnails/projects/dictionary.jpg)](https://www.youtube.com/watch?v=THDz0_HN1DU)
 
 ## License
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is licensed under the [MIT License](LICENSE).
